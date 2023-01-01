@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import {
-  AutoComplete,
-  Button,
-  Cascader,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-} from "antd";
+import { Button, Checkbox, Col, Form, Input, Row, Select } from "antd";
 import CenteredDiv from "../utils/components/CenteredDiv";
+import {Link} from "react-router-dom";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -237,6 +227,9 @@ const RegistrationForm = () => {
           <Button type="primary" htmlType="submit">
             Register
           </Button>
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Link to="/login">Already a user ?</Link>
         </Form.Item>
       </Form>
     </CenteredDiv>
