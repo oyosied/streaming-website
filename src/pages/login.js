@@ -3,9 +3,10 @@ import { Button, Checkbox, Form, Input, Col , Row} from "antd";
 import CenteredDiv from "../utils/components/CenteredDiv";
 import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   let navigate = useNavigate();
   const onFinish = (values) => {
+    props.setUser({logged:true});
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
