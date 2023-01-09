@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Select } from "antd";
 import CenteredDiv from "../utils/components/CenteredDiv";
 import {Link} from "react-router-dom";
@@ -51,32 +50,6 @@ const RegistrationForm = () => {
       </Select>
     </Form.Item>
   );
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
-    }
-  };
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
   return (
     <CenteredDiv>
       <Form
@@ -204,24 +177,6 @@ const RegistrationForm = () => {
               <Button>Get captcha</Button>
             </Col>
           </Row>
-        </Form.Item>
-
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[
-            {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(new Error("Should accept agreement")),
-            },
-          ]}
-          {...tailFormItemLayout}
-        >
-          <Checkbox>
-            I have read the <a href="">agreement</a>
-          </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
