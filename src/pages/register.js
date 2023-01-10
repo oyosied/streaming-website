@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Input, Row, Select } from "antd";
 import CenteredDiv from "../utils/components/CenteredDiv";
 import {Link} from "react-router-dom";
 const { Option } = Select;

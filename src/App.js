@@ -5,14 +5,16 @@ import ImageContainer from "./utils/components/Image.js";
 import logo_style from "./utils/models/css_styles.js";
 import { useState } from "react";
 import Home from "./pages/home";
+import CenteredDiv from "./utils/components/CenteredDiv";
+
 const App = () => {
   let routes;
   const [user, setuser] = useState({ logged: false });
 
   routes = user.logged ? (
     <Routes>
-        <Route path="*" element={<Navigate to="/home"/>}/>
-        <Route path="/home" element={<Home/>} />
+      <Route path="*" element={<Navigate to="/home" />} />
+      <Route path="/home" element={<Home />} />
     </Routes>
   ) : (
     <Routes>
@@ -26,7 +28,9 @@ const App = () => {
       <header>
         <ImageContainer imageStyle={logo_style} imagePath="resting_cat.jpg" />
       </header>
-      <main>{routes}</main>
+      <main>
+        <CenteredDiv>{routes}</CenteredDiv>
+      </main>
     </div>
   );
 };
