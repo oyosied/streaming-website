@@ -1,16 +1,20 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Button, Checkbox, Form, Input, Col , Row} from "antd";
 import CenteredDiv from "../utils/components/CenteredDiv";
 import { useNavigate } from "react-router-dom";
+import { UserContext} from "../utils/store/AuthContext.js"
 
 const LoginForm = (props) => {
+  const {login} = useContext(UserContext);
+
   let navigate = useNavigate();
   const onFinish = (values) => {
-    props.setUser({logged:true});
-    console.log("Success:", values);
+    login({user:{logged:true}});
+    //console.log("Success:", values);
+    navigate('/home');
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    //console.log("Failed:", errorInfo);
   };
   const onRegister = () => {
     let path = `/register`;

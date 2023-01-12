@@ -1,37 +1,42 @@
 import LoginForm from "./pages/login";
 import { Route, Routes, Navigate } from "react-router-dom";
 import RegistrationForm from "./pages/register";
-import ImageContainer from "./utils/components/Image.js";
-import logo_style from "./utils/models/css_styles.js";
-import { useState } from "react";
+import React from 'react';
+import { useState, useContext, useEffect } from "react";
 import Home from "./pages/home";
 import CenteredDiv from "./utils/components/CenteredDiv";
+import { UserContext } from "./utils/store/AuthContext.js"
+import {NavBar} from "./utils/components/NavBar/NavBar.js";
 
 const App = () => {
+  const { user } = useContext(UserContext);
   let routes;
-  const [user, setuser] = useState({ logged: false });
 
   routes = user.logged ? (
-    <Routes>
-      <Route path="*" element={<Navigate to="/home" />} />
-      <Route path="/home" element={<Home />} />
-    </Routes>
+    <React.Fragment>
+      <CenteredDiv>
+      <NavBar/>
+        <Routes>
+          <Route path="*" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </CenteredDiv>
+    </React.Fragment>
+
   ) : (
-    <Routes>
-      <Route path="*" element={<Navigate to="/login" />} />
-      <Route exact path="/login" element={<LoginForm setUser={setuser} />} />
-      <Route exact path="/register" element={<RegistrationForm />} />
-    </Routes>
+    <CenteredDiv>
+      <Routes>
+        <Route path="*" element={<Navigate to="/login" />} />
+        <Route exact path="/login" element={<LoginForm />} />
+        <Route exact path="/register" element={<RegistrationForm />} />
+      </Routes>
+    </CenteredDiv>
   );
   return (
-    <div>
-      <header>
-        <ImageContainer imageStyle={logo_style} imagePath="resting_cat.jpg" />
-      </header>
-      <main>
-        <CenteredDiv>{routes}</CenteredDiv>
-      </main>
-    </div>
+
+    <React.Fragment>
+      {routes}
+    </React.Fragment>
   );
 };
 

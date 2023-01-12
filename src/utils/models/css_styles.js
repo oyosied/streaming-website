@@ -1,12 +1,8 @@
 
 
 const logo_style = {  height: "auto",
-    width: "15%",
-    margin: "auto",
-    position: "absolute",
-    textAlign: "left",
-    top: "15px",
-    left: "15px"}
+    width: '240px',
+    display: "flex"}
 
 
 module.exports = logo_style

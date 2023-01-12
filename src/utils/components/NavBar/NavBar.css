@@ -1,0 +1,7 @@
+.navbar {
+
+    display: flex;
+background: red;
+width: 200px;
+height: 100vh;
+}
