@@ -1,0 +1,10 @@
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.content-body {
+  text-align: center;
+  width: 75%;
+}

@@ -1,12 +1,11 @@
-import LoginForm from "./pages/login";
 import { Route, Routes, Navigate } from "react-router-dom";
-import RegistrationForm from "./pages/register";
-import React from 'react';
+import { RegistraionPage } from "./pages/RegisterPage/RegistrationPage";
+import React from "react";
 import { useState, useContext, useEffect } from "react";
-import Home from "./pages/home";
-import CenteredDiv from "./utils/components/CenteredDiv";
-import { UserContext } from "./utils/store/AuthContext.js"
-import {NavBar} from "./utils/components/NavBar/NavBar.js";
+import { HomePage } from "./pages/HomePage/HomePage";
+import { UserContext } from "./utils/store/AuthContext.js";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
+import { MainBody } from "./utils/components/Containers/MainBody/MainBody";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -14,30 +13,19 @@ const App = () => {
 
   routes = user.logged ? (
     <React.Fragment>
-      <CenteredDiv>
-      <NavBar/>
-        <Routes>
-          <Route path="*" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </CenteredDiv>
-    </React.Fragment>
-
-  ) : (
-    <CenteredDiv>
       <Routes>
-        <Route path="*" element={<Navigate to="/login" />} />
-        <Route exact path="/login" element={<LoginForm />} />
-        <Route exact path="/register" element={<RegistrationForm />} />
+        <Route path="*" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
-    </CenteredDiv>
-  );
-  return (
-
-    <React.Fragment>
-      {routes}
     </React.Fragment>
+  ) : (
+    <Routes>
+      <Route path="*" element={<Navigate to="/login" />} />
+      <Route exact path="/login" element={<LoginPage />} />
+      <Route exact path="/register" element={<RegistraionPage />} />
+    </Routes>
   );
+  return <MainBody>{routes}</MainBody>;
 };
 
 export default App;
