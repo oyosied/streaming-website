@@ -1,10 +1,10 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext, useState, useCallback, useEffect, useMemo } from "react";
 
 // create the context
 export const UserContext = createContext({
   user: { logged: false },
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
 });
 
 // create a provider for the context
@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
 
   // login function to save the user information in state and local storage
   const login = useCallback((userInfo) => {
-    setUser(userInfo.user);
+    setUser(userInfo);
     localStorage.setItem("user", JSON.stringify(userInfo));
   }, []);
 
@@ -23,6 +23,22 @@ export const UserProvider = ({ children }) => {
     setUser({ logged: false });
     localStorage.removeItem("user");
   }, []);
+
+  // useMemo to store the parsed data from localstorage
+  const storedData = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user"));
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (storedData && storedData.logged) {
+      login(storedData);
+    }
+  }, [login, storedData]);
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>

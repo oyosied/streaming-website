@@ -8,7 +8,7 @@ const LoginForm = (props) => {
 
   let navigate = useNavigate();
   const onFinish = (values) => {
-    login({ user: { logged: true } });
+    login({ logged: true });
     //console.log("Success:", values);
     navigate("/home");
   };

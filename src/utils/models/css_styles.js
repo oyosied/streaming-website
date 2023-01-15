@@ -1,4 +1,4 @@
-const logo_style = { height: "auto", width: "100%", display: "flex" };
+const logo_style = { height: "auto", width: "auto", display: "flex" };
 const centered_div = {
   display: "flex",
   alignItems: "center",

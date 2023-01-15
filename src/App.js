@@ -10,7 +10,7 @@ import { MainBody } from "./utils/components/Containers/MainBody/MainBody";
 const App = () => {
   const { user } = useContext(UserContext);
   let routes;
-
+  //console.log(user);
   routes = user.logged ? (
     <React.Fragment>
       <Routes>
