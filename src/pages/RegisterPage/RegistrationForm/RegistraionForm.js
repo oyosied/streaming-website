@@ -55,10 +55,6 @@ const RegistrationForm = () => {
       form={form}
       name="register"
       onFinish={onFinish}
-      initialValues={{
-        residence: ["zhejiang", "hangzhou", "xihu"],
-        prefix: "86",
-      }}
       scrollToFirstError
     >
       <Form.Item
@@ -152,37 +148,17 @@ const RegistrationForm = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        label="Captcha"
-        extra="We must make sure that your are a human."
-      >
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[
-                {
-                  required: true,
-                  message: "Please input the captcha you got!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+      <Form.Item {...tailFormItemLayout}>
+        <Row>
+          <Col span={10}>
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
           </Col>
-          <Col span={12}>
-            <Button>Get captcha</Button>
+          <Col>
+            <Link to="/login">Already a user ?</Link>
           </Col>
         </Row>
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Link to="/login">Already a user ?</Link>
       </Form.Item>
     </Form>
   );
