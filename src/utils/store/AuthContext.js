@@ -1,47 +1,71 @@
-import React, { createContext, useState, useCallback, useEffect, useMemo } from "react";
-
+import React, {
+  createContext,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useContext,
+} from "react";
+import { ApiManagerContext } from "./ApiMangerContext";
 // create the context
 export const UserContext = createContext({
-  user: { logged: false },
-  login: () => { },
-  logout: () => { },
+  token: "",
+  login: () => {},
+  logout: () => {},
 });
 
 // create a provider for the context
 export const UserProvider = ({ children }) => {
   // state to store the user information
-  const [user, setUser] = useState({ logged: false });
-
+  const [token, setToken] = useState("");
+  const ApiManager = useContext(ApiManagerContext);
   // login function to save the user information in state and local storage
-  const login = useCallback((userInfo) => {
-    setUser(userInfo);
-    localStorage.setItem("user", JSON.stringify(userInfo));
+  const login = useCallback(async (userInfo) => {
+    setToken(userInfo);
+    localStorage.setItem("token", JSON.stringify(userInfo));
   }, []);
 
   // logout function to remove the user information from state and local storage
   const logout = useCallback(() => {
-    setUser({ logged: false });
-    localStorage.removeItem("user");
+    setToken();
+    localStorage.removeItem("token");
   }, []);
 
   // useMemo to store the parsed data from localstorage
   const storedData = useMemo(() => {
     try {
-      return JSON.parse(localStorage.getItem("user"));
+      const local_storage = JSON.parse(localStorage.getItem("token"));
+      return local_storage;
     } catch (error) {
-      console.log(error);
-      return null;
+      localStorage.removeItem("token");
+      return;
     }
   }, []);
 
   useEffect(() => {
-    if (storedData && storedData.logged) {
-      login(storedData);
-    }
-  }, [login, storedData]);
+    const isValid = async () => {
+      const token_validation = await ApiManager.get(
+        "/users/validate-token",
+        {},
+        {
+          Authorization: storedData,
+        }
+      );
+      try {
+        if (!token_validation.error) {
+          login(storedData);
+        } else {
+          logout();
+        }
+      } catch {
+        logout();
+      }
+    };
+    isValid();
+  }, [login, logout, ApiManager, storedData]);
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ token: token, login, logout }}>
       {children}
     </UserContext.Provider>
   );

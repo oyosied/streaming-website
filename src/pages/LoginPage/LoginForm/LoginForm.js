@@ -1,19 +1,28 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Checkbox, Form, Input, Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../utils/store/AuthContext.js";
+import { ApiManagerContext } from "../../../utils/store/ApiMangerContext.js";
 
 const LoginForm = (props) => {
-  const { login } = useContext(UserContext);
+  const [error, setError] = useState(false);
 
-  let navigate = useNavigate();
-  const onFinish = (values) => {
-    login({ logged: true });
-    //console.log("Success:", values);
-    navigate("/home");
-  };
-  const onFinishFailed = (errorInfo) => {
-    //console.log("Failed:", errorInfo);
+  const { login } = useContext(UserContext);
+  // eslint-disable-next-line
+  const { post } = useContext(ApiManagerContext);
+
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    const login_res = await post("/users/login", {
+      email: values.email,
+      password: values.password,
+    });
+    if (!login_res.error) {
+      login(login_res.response.data.token);
+      navigate("/home");
+    } else {
+      setError(true);
+    }
   };
   const onRegister = () => {
     let path = `/register`;
@@ -32,16 +41,15 @@ const LoginForm = (props) => {
         remember: true,
       }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
-        label="Username"
-        name="username"
+        label="Email"
+        name="email"
         rules={[
           {
             required: true,
-            message: "Please input your username!",
+            message: "Please input your Email!",
           },
         ]}
       >
@@ -91,6 +99,18 @@ const LoginForm = (props) => {
           </Col>
         </Row>
       </Form.Item>
+      {error && (
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Row>
+            <div style={{ color: "red" }}>{"Email or password is wrong!"}</div>
+          </Row>
+        </Form.Item>
+      )}
     </Form>
   );
 };

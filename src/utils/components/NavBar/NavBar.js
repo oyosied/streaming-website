@@ -14,7 +14,7 @@ import ImageContainer from "../Image.js";
 import logo_style from "../../models/css_styles.js";
 import "./NavBar.css";
 
-const drawerWidth = "15%";
+const drawerWidth = "25%";
 
 export function NavBar() {
   const { logout } = useContext(UserContext);
