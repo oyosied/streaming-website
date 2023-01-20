@@ -10,7 +10,7 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import ImageContainer from "../Image.js";
+import ImageContainer from "../ImageContainer.js";
 import logo_style from "../../models/css_styles.js";
 import "./NavBar.css";
 
