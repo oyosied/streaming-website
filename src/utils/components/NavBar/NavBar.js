@@ -11,10 +11,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ImageContainer from "../ImageContainer.js";
-import logo_style from "../../models/css_styles.js";
 import "./NavBar.css";
 
-const drawerWidth = "25%";
+const drawerWidth = "15%";
 
 export function NavBar() {
   const { logout } = useContext(UserContext);
@@ -24,7 +23,6 @@ export function NavBar() {
         <CssBaseline />
         <Drawer
           sx={{
-            width: drawerWidth,
             flexShrink: 0,
             "& .MuiDrawer-paper": {
               width: drawerWidth,
@@ -35,12 +33,7 @@ export function NavBar() {
           anchor="left"
         >
           <Toolbar disableGutters>
-            <Box>
-              <ImageContainer
-                imageStyle={logo_style}
-                imagePath="resting_cat.jpg"
-              />
-            </Box>
+            <ImageContainer imagePath="resting_cat.jpg" />
           </Toolbar>
           <Divider />
           <List>
