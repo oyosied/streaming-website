@@ -1,6 +1,12 @@
-.rectangle-card{
-    width: 150px;
-    height: 300px;
-    border: 2px solid black;
-    border-radius: 0;
-  }
+.rectangle-card {
+  width: 150px;
+  height: 304px;
+  border: 2px solid black;
+  border-radius: 0;
+}
+.square-card {
+  width: 150px;
+  height: 154px;
+  border: 2px solid black;
+  border-radius: 0;
+}
