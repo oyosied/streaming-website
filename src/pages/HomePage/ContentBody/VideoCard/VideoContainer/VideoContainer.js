@@ -1,48 +1,46 @@
 import React, { useState, useRef } from "react";
 import "./VideoContainer.css";
 
-const VideoContainer = () => {
-  const [videoVisible, setVideoVisible] = useState(false);
+const VideoContainer = (props) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [muted, setMuted] = useState(false);
+  const muteButtonRef = useRef(null);
   const videoRef = useRef(null);
 
-  const handleHover = () => {
-    if (videoLoaded && videoVisible) {
-      videoRef.current.play();
-    }
+  const handleEnter = () => {
+    props.handleHover();
+    videoRef.current.play();
   };
-
   const handleLeave = () => {
-    setVideoVisible(false);
-    setVideoLoaded(false);
+    props.handleLeave();
     videoRef.current.load();
   };
-
   const toggleMute = () => {
     setMuted(!muted);
     videoRef.current.muted = !muted;
   };
   return (
-    <div
-      className="video-container"
-      onMouseEnter={handleHover}
-      onMouseLeave={handleLeave}
-    >
+    <div className="video-container">
       <video
-        className={`video ${videoVisible && videoLoaded ? "expand-video" : ""}`}
+        className={`video ${
+          props.hoverVisible && videoLoaded ? "expand-video" : ""
+        }`}
         src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
         ref={videoRef}
         preload="metadata"
         controls={false}
         onLoadedData={() => {
-          console.log("Play2");
-          setVideoVisible(true);
           setVideoLoaded(true);
         }}
+        onMouseEnter={handleEnter}
+        onMouseLeave={handleLeave}
       />
-      {videoLoaded && videoVisible && (
-        <button className="mute-button" onClick={toggleMute}>
+      {videoLoaded && props.hoverVisible && (
+        <button
+          className="mute-button"
+          ref={muteButtonRef}
+          onClick={toggleMute}
+        >
           {muted ? "Unmute" : "Mute"}
         </button>
       )}
