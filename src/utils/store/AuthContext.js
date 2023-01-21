@@ -44,21 +44,25 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const isValid = async () => {
-      const token_validation = await ApiManager.get(
-        "/users/validate-token",
-        {},
-        {
-          Authorization: storedData,
-        }
-      );
-      try {
-        if (!token_validation.error) {
-          login(storedData);
-        } else {
+      if (storedData == null) {
+        return;
+      } else {
+        try {
+          const token_validation = await ApiManager.get(
+            "/users/validate-token",
+            {},
+            {
+              Authorization: storedData,
+            }
+          );
+          if (!token_validation.error) {
+            login(storedData);
+          } else {
+            logout();
+          }
+        } catch {
           logout();
         }
-      } catch {
-        logout();
       }
     };
     isValid();
