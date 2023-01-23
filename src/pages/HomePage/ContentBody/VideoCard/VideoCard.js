@@ -7,6 +7,7 @@ const VideoCard = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleHover = () => {
+    console.log(1);
     setIsHovered(true);
   };
 
@@ -26,7 +27,7 @@ const VideoCard = (props) => {
           handleLeave={handleLeave}
         />
         <ImageContainer
-          className={`picture`}
+          className={`picture ${!isHovered ? "" : "hidden"}`}
           imagePath="resting_cat.jpg"
           hoverVisible={!isHovered}
         ></ImageContainer>
