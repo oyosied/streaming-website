@@ -8,9 +8,6 @@ const ContentBody = () => {
       <div className="square-card">
         <VideoCard />
       </div>
-      <div className="square-card">
-        <VideoCard />
-      </div>
     </div>
   );
 };

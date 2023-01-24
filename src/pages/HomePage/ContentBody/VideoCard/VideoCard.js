@@ -15,12 +15,7 @@ const VideoCard = (props) => {
     setIsHovered(false);
   };
   return (
-    <div className="card">
-      <div
-        className="card-inner"
-        onMouseEnter={handleHover}
-        onMouseLeave={handleLeave}
-      >
+    <div className="card" onMouseEnter={handleHover} onMouseLeave={handleLeave}>
         <VideoContainer
           hoverVisible={isHovered}
           handleHover={handleHover}
@@ -31,7 +26,6 @@ const VideoCard = (props) => {
           imagePath="resting_cat.jpg"
           hoverVisible={!isHovered}
         ></ImageContainer>
-      </div>
     </div>
   );
 };

@@ -16,6 +16,7 @@ const VideoContainer = (props) => {
     setTimeout(() => videoRef.current.play(), 500);
   };
   const handleLeave = () => {
+    console.log("Left video");
     setVideoLoaded(true);
     setVideoLoaded(false);
     setMuted(true);
@@ -26,6 +27,27 @@ const VideoContainer = (props) => {
     setMuted(!muted);
     videoRef.current.muted = !muted;
   };
+
+  const _video = ()=> {
+    const video_tag = (<video
+    className={`video ${
+      videoLoaded && props.hoverVisible ? "expand-video" : "hidden"
+    }`}
+    src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    ref={videoRef}
+    preload="metadata"
+    controls={false}
+    muted={muted}
+    onLoadedData={() => {
+      setTimeout(() => {
+        setVideoLoaded(true);
+        setLoading(false);
+        playVideo();
+      }, 5000);
+    }}
+  />)
+  setTimeout(()=>{ return video_tag},500)  
+  }
   return (
     <div
       className={`video-container ${props.hoverVisible ? "" : "hidden"}`}
@@ -34,21 +56,7 @@ const VideoContainer = (props) => {
     >
       {loading || !videoLoaded ? <CircularProgress /> : ""}
 
-      <video
-        className={`video ${videoLoaded ? "expand-video" : "hidden"}`}
-        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-        ref={videoRef}
-        preload="metadata"
-        controls={false}
-        muted={muted}
-        onLoadedData={() => {
-          setTimeout(() => {
-            setVideoLoaded(true);
-            setLoading(false);
-            playVideo();
-          }, 5000);
-        }}
-      ></video>
+      {props.hoverVisible && _video}
 
       {!loading && videoLoaded && (
         <button
