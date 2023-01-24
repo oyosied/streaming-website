@@ -15,23 +15,23 @@
   object-fit: fill;
 }
 .mute-button {
+  pointer-events: none;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
 }
 .video-container .video {
   width: 100%;
   height: 150px;
   object-fit: fill;
 }
-.video.expand-video {
+.video:hover {
   object-fit: fill;
   display: block;
   transform: scale(1.5);
-  z-index: 1;
-  transition: transform 11.5s ease-in-out;
+  transition: transform 1.5s ease-in-out;
 }
+
 .video-container.hidden {
   display: none;
 }

@@ -4,7 +4,7 @@ import "./VideoCard.css";
 import { VideoContainer } from "./VideoContainer/VideoContainer";
 
 const VideoCard = (props) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(true);
 
   const handleHover = () => {
     console.log(1);
@@ -16,16 +16,12 @@ const VideoCard = (props) => {
   };
   return (
     <div className="card" onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-        <VideoContainer
-          hoverVisible={isHovered}
-          handleHover={handleHover}
-          handleLeave={handleLeave}
-        />
-        <ImageContainer
-          className={`picture ${!isHovered ? "" : "hidden"}`}
-          imagePath="resting_cat.jpg"
-          hoverVisible={!isHovered}
-        ></ImageContainer>
+      {isHovered && <VideoContainer />}
+      <ImageContainer
+        className={`picture ${!isHovered ? "" : "hidden"}`}
+        imagePath="resting_cat.jpg"
+        hoverVisible={!isHovered}
+      ></ImageContainer>
     </div>
   );
 };

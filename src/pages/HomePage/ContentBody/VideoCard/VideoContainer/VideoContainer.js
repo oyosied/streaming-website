@@ -5,12 +5,14 @@ import { CircularProgress } from "@material-ui/core";
 const VideoContainer = (props) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isVideoHover, setIsVideoHover] = useState(false);
   const [muted, setMuted] = useState(true);
   const muteButtonRef = useRef(null);
   const videoRef = useRef(null);
 
   const handleEnter = () => {
-    props.handleHover();
+    console.log("in video");
+    setIsVideoHover(true);
   };
   const playVideo = () => {
     setTimeout(() => videoRef.current.play(), 500);
@@ -20,7 +22,7 @@ const VideoContainer = (props) => {
     setVideoLoaded(true);
     setVideoLoaded(false);
     setMuted(true);
-    props.handleLeave();
+    setIsVideoHover(false);
     videoRef.current.load();
   };
   const toggleMute = () => {
@@ -28,35 +30,31 @@ const VideoContainer = (props) => {
     videoRef.current.muted = !muted;
   };
 
-  const _video = ()=> {
-    const video_tag = (<video
-    className={`video ${
-      videoLoaded && props.hoverVisible ? "expand-video" : "hidden"
-    }`}
-    src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-    ref={videoRef}
-    preload="metadata"
-    controls={false}
-    muted={muted}
-    onLoadedData={() => {
-      setTimeout(() => {
-        setVideoLoaded(true);
-        setLoading(false);
-        playVideo();
-      }, 5000);
-    }}
-  />)
-  setTimeout(()=>{ return video_tag},500)  
-  }
   return (
     <div
-      className={`video-container ${props.hoverVisible ? "" : "hidden"}`}
+      className={`video-container`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       {loading || !videoLoaded ? <CircularProgress /> : ""}
 
-      {props.hoverVisible && _video}
+      <video
+        className={`video ${
+          videoLoaded && isVideoHover ? "expand-video" : "hidden"
+        }`}
+        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        ref={videoRef}
+        preload="metadata"
+        controls={false}
+        muted={muted}
+        onLoadedData={() => {
+          setTimeout(() => {
+            setVideoLoaded(true);
+            setLoading(false);
+            playVideo();
+          }, 5000);
+        }}
+      />
 
       {!loading && videoLoaded && (
         <button

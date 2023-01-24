@@ -6,7 +6,7 @@
 }
 .square-card {
   width: 150px;
-  height: 154px;
-  border: 2px solid black;
+  height: 150px;
+  border: 1px solid black;
   border-radius: 0;
 }
