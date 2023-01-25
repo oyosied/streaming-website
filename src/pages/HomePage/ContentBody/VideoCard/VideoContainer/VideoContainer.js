@@ -1,70 +1,73 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./VideoContainer.css";
 import { CircularProgress } from "@material-ui/core";
 
 const VideoContainer = (props) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isVideoHover, setIsVideoHover] = useState(false);
   const [muted, setMuted] = useState(true);
-  const muteButtonRef = useRef(null);
   const videoRef = useRef(null);
 
   const handleEnter = () => {
-    console.log("in video");
-    setIsVideoHover(true);
-  };
-  const playVideo = () => {
-    setTimeout(() => videoRef.current.play(), 500);
+    if (videoRef.current) {
+      setVideoLoaded(true);
+      setTimeout(() => videoRef.current && videoRef.current.play(), 500);
+    }
   };
   const handleLeave = () => {
-    console.log("Left video");
-    setVideoLoaded(true);
-    setVideoLoaded(false);
-    setMuted(true);
-    setIsVideoHover(false);
-    videoRef.current.load();
+    if (videoRef.current) {
+      setVideoLoaded(false);
+      setIsVideoExpanded(false);
+      setLoading(true);
+      setMuted(true);
+      videoRef.current.load();
+    }
   };
+
   const toggleMute = () => {
     setMuted(!muted);
     videoRef.current.muted = !muted;
   };
 
+  useEffect(() => {
+    if (isVideoExpanded && !loading && videoLoaded) {
+      videoRef.current.parentElement.classList.add("expand-video");
+    } else {
+      videoRef.current.parentElement.classList.remove("expand-video");
+    }
+  }, [isVideoExpanded, loading, videoLoaded]);
+
   return (
     <div
-      className={`video-container`}
+      className="preview-block"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      {loading || !videoLoaded ? <CircularProgress /> : ""}
-
-      <video
-        className={`video ${
-          videoLoaded && isVideoHover ? "expand-video" : "hidden"
-        }`}
-        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-        ref={videoRef}
-        preload="metadata"
-        controls={false}
-        muted={muted}
-        onLoadedData={() => {
-          setTimeout(() => {
-            setVideoLoaded(true);
-            setLoading(false);
-            playVideo();
-          }, 5000);
-        }}
-      />
-
-      {!loading && videoLoaded && (
-        <button
-          className="mute-button"
-          ref={muteButtonRef}
-          onClick={toggleMute}
-        >
-          {muted ? "Unmute" : "Mute"}
-        </button>
-      )}
+      <div className="circular-progress-wrapper">
+        {loading ? <CircularProgress /> : ""}
+      </div>
+      <div className={`video-container`}>
+        <video
+          className={`video ${videoLoaded && !loading ? "" : "hidden"}`}
+          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+          ref={videoRef}
+          preload="metadata"
+          controls={false}
+          muted={true}
+          onLoadedData={() => {
+            setTimeout(() => {
+              setLoading(false);
+              setIsVideoExpanded(true);
+            }, 500);
+          }}
+        />
+        {!loading && (
+          <button className="mute-button" onClick={toggleMute}>
+            {muted ? "Unmute" : "Mute"}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import "./VideoCard.css";
 import { VideoContainer } from "./VideoContainer/VideoContainer";
 
 const VideoCard = (props) => {
-  const [isHovered, setIsHovered] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleHover = () => {
     console.log(1);
