@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import ImageContainer from "../../../../utils/components/ImageContainer";
 import "./VideoCard.css";
-import { VideoContainer } from "./VideoContainer/VideoContainer";
+import { PreviewBlock } from "./VideoContainer/PreviewBlock.js";
 
 const VideoCard = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleHover = () => {
-    console.log(1);
     setIsHovered(true);
   };
 
@@ -16,7 +15,7 @@ const VideoCard = (props) => {
   };
   return (
     <div className="card" onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-      {isHovered && <VideoContainer />}
+      {isHovered && <PreviewBlock />}
       <ImageContainer
         className={`picture ${!isHovered ? "" : "hidden"}`}
         imagePath="resting_cat.jpg"

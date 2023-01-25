@@ -4,10 +4,8 @@ import "./ContentBody.css";
 
 const ContentBody = () => {
   return (
-    <div>
-      <div className="square-card">
-        <VideoCard />
-      </div>
+    <div className="square-card">
+      <VideoCard />
     </div>
   );
 };
