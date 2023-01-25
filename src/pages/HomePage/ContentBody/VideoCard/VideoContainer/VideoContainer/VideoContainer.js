@@ -29,16 +29,6 @@ const VideoContainer = () => {
     videoRef.current.muted = !muted;
   };
 
-  useEffect(() => {
-    if (isVideoExpanded && !loading && videoLoaded && videoRef.current) {
-      videoRef.current.parentElement.classList.add("expand-video");
-    } else {
-      if (videoRef.current) {
-        videoRef.current.parentElement.classList.remove("expand-video");
-      }
-    }
-  }, [isVideoExpanded, loading, videoLoaded]);
-
   return (
     <div
       className={`video-container`}
