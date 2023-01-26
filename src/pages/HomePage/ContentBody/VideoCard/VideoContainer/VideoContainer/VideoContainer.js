@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { CircularProgress } from "@material-ui/core";
 import "./VideoContainer.css";
-const VideoContainer = () => {
+const VideoContainer = (props) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -10,12 +10,13 @@ const VideoContainer = () => {
 
   const handleEnter = () => {
     if (videoRef.current) {
+      setIsVideoExpanded(true);
       setVideoLoaded(true);
       setTimeout(() => videoRef.current && videoRef.current.play(), 500);
     }
   };
   const handleLeave = () => {
-    if (videoRef.current) {
+    if (videoRef.current && !props.previewHover) {
       setVideoLoaded(false);
       setIsVideoExpanded(false);
       setLoading(true);
@@ -30,11 +31,7 @@ const VideoContainer = () => {
   };
 
   return (
-    <div
-      className={`video-container`}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-    >
+    <div className={`video-container`} onMouseLeave={handleLeave}>
       <div className="circular-progress-wrapper">
         {loading ? <CircularProgress /> : ""}
       </div>
@@ -49,7 +46,7 @@ const VideoContainer = () => {
         onLoadedData={() => {
           setTimeout(() => {
             setLoading(false);
-            setIsVideoExpanded(true);
+            handleEnter();
           }, 500);
         }}
       />

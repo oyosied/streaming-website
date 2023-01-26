@@ -19,12 +19,12 @@
   transition: transform 1.5s ease-in-out;
 }
 
-
 .description-box {
+  pointer-events: none;
   height: auto;
   width: auto;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   text-align: center;
   font-size: 8px;
 }

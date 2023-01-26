@@ -5,6 +5,9 @@
   object-fit: fill;
   border-bottom: 1px solid black;
 }
+.hidden {
+  display: none;
+}
 .mute-button {
   pointer-events: auto;
   position: absolute;
