@@ -2,7 +2,7 @@
   display: flex;
   width: 15%;
   align-items: left;
-  z-index: 0;
+  z-index: 20;
 }
 
 .navbar img {
