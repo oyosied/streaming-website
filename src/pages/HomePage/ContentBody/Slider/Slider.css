@@ -34,6 +34,18 @@
   padding: var(--img-gap);
   object-fit: contain;
 }
+.item:hover {
+  transform: scale(1.5);
+  transition: transform 1.5s ease-in-out;
+}
+
+.slider > .item:first-child {
+  transform-origin: left center;
+}
+.slider > .item:last-child {
+  transform-origin: right center;
+}
+
 .slider:hover {
   z-index: 5;
 }
