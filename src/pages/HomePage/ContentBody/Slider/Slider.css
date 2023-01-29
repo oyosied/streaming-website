@@ -13,6 +13,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: none;
 }
 
 .slider {
@@ -28,14 +29,13 @@
 .slider > .item {
   flex: 0 0 20rem;
   max-width: 20rem;
+  max-height: 10rem;
+  min-height: 10rem;
   padding: var(--img-gap);
   object-fit: contain;
 }
-.container:hover {
-  z-index: 15;
-}
-.header {
-  z-index: 1;
+.slider:hover {
+  z-index: 5;
 }
 
 .handle {
@@ -58,11 +58,13 @@
 }
 
 .left-handle {
+  z-index: 6;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
 .right-handle {
+  z-index: 6;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
