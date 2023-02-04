@@ -18,7 +18,7 @@ const LoginForm = (props) => {
       password: values.password,
     });
     if (!login_res.error) {
-      login(login_res.response.data.token);
+      login(login_res.response.token);
       navigate("/home");
     } else {
       setError(true);

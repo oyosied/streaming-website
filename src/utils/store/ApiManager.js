@@ -22,7 +22,7 @@ class ApiManager {
     );
     this.api.interceptors.response.use(
       (response) => {
-        return { error: false, response };
+        return { error: false, response: response.data };
       },
       (error) => {
         return { error: true, response: error };

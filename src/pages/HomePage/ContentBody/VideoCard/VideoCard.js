@@ -3,7 +3,7 @@ import ImageContainer from "../../../../utils/components/ImageContainer";
 import "./VideoCard.css";
 import { PreviewBlock } from "./VideoContainer/PreviewBlock.js";
 
-const VideoCard = (props) => {
+const VideoCard = ({ previewContent }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleHover = () => {
@@ -15,7 +15,7 @@ const VideoCard = (props) => {
   };
   return (
     <div className="card" onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-      {isHovered && <PreviewBlock />}
+      {isHovered && <PreviewBlock videoData={previewContent} />}
       <ImageContainer
         className={`picture ${!isHovered ? "" : "hidden"}`}
         imagePath="resting_cat.jpg"

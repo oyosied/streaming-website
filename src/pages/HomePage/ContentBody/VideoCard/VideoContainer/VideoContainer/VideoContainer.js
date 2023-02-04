@@ -29,26 +29,28 @@ const VideoContainer = (props) => {
     setMuted(!muted);
     videoRef.current.muted = !muted;
   };
-
+  console.log(props.videoContainerData["preview_video_url"]);
   return (
     <div className={`video-container`} onMouseLeave={handleLeave}>
       <div className="circular-progress-wrapper">
-        {loading ? <CircularProgress /> : ""}
+        {/* {loading ? <CircularProgress /> : ""} */}
       </div>
 
-      <video
-        className={`video ${videoLoaded && !loading ? "" : "hidden"}`}
-        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+      <iframe
+        title="Youtube Play"
+        className={`video }`}
+        src={props.videoContainerData["preview_video_url"]}
         ref={videoRef}
         preload="metadata"
         controls={false}
+        autoStart
         muted={true}
-        onLoadedData={() => {
-          setTimeout(() => {
-            setLoading(false);
-            handleEnter();
-          }, 500);
-        }}
+        // onLoadedData={() => {
+        //   setTimeout(() => {
+        //     setLoading(false);
+        //     handleEnter();
+        //   }, 500);
+        // }}
       />
       {!loading && isVideoExpanded && videoLoaded && (
         <button className="mute-button" onClick={toggleMute}>

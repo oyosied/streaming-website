@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { VideoContainer } from "./VideoContainer/VideoContainer.js";
 import "./PreviewBlock.css";
 
-const PreviewBlock = (props) => {
+const PreviewBlock = ({ videoData }) => {
   const [isPreviewHovered, setIsPreviewHovered] = useState(false);
 
   const handleHover = () => {
@@ -13,15 +13,18 @@ const PreviewBlock = (props) => {
     setIsPreviewHovered(false);
   };
   return (
-    <div
-      className="preview-block"
-      onMouseEnter={handleHover}
-      onMouseLeave={handleLeave}
-    >
-      <VideoContainer previewHover={isPreviewHovered} />
-      <div className="description-box">
-        <p>Some pseudo text describing the video</p>
+    <div className="preview-container">
+      <div
+        className="preview-block"
+        onMouseEnter={handleHover}
+        onMouseLeave={handleLeave}
+      >
+        <VideoContainer
+          videoContainerData={videoData}
+          previewHover={isPreviewHovered}
+        />
       </div>
+      <div className="description-box">{videoData.description}</div>
     </div>
   );
 };

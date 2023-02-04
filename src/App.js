@@ -11,7 +11,7 @@ import { MainBody } from "./utils/components/Containers/MainBody/MainBody";
 const App = () => {
   const { token } = useContext(UserContext);
   let routes;
-  routes = true ? (
+  routes = token ? (
     <React.Fragment>
       <Routes>
         <Route path="*" element={<Navigate to="/home" />} />

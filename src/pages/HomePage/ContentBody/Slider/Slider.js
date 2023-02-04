@@ -1,8 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { VideoCard } from "../VideoCard/VideoCard";
+import { UserContext } from "../../../../utils/store/AuthContext";
 import "./Slider.css";
 
 const Slider = (props) => {
   const [sliderIndex, setSliderIndex] = useState(0);
+  const { token } = useContext(UserContext);
+  const [itemsPerScreen, setItemsPerScreen] = useState(null);
+  useEffect(() => {
+    const sliderElement = document.querySelector(".slider");
+    setItemsPerScreen(
+      window
+        .getComputedStyle(sliderElement)
+        .getPropertyValue("--items-per-screen") - 0
+    );
+    const handleResize = () => {
+      setItemsPerScreen(
+        window
+          .getComputedStyle(sliderElement)
+          .getPropertyValue("--items-per-screen") - 0
+      );
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   //const handleSize = "3rem";
   const imgGap = "0.25rem";
   const handleClick = (direction) => {
@@ -16,7 +40,7 @@ const Slider = (props) => {
   return (
     <div className="row">
       <div className="header">
-        <h3 className="title">Title</h3>
+        <h3 className="title">{props.genre["name"]}</h3>
         <div className="progress-bar"></div>
       </div>
       <div className="container">
@@ -34,15 +58,26 @@ const Slider = (props) => {
             margin: `0 ${imgGap}`,
           }}
         >
-          {React.Children.map(props.children, (Component, i) => {
-            return (
-              <div className="item">
-                {React.cloneElement(Component, {
-                  key: i,
-                })}
-              </div>
-            );
-          })}
+          {itemsPerScreen &&
+            props.genre.series.map((serie, i) => {
+              console.log(serie);
+              const firstChildIndex = sliderIndex * itemsPerScreen;
+              const lastChildIndex = firstChildIndex + itemsPerScreen - 1;
+              return (
+                <div
+                  key={serie + i}
+                  className={`item ${
+                    i === lastChildIndex
+                      ? "last-child"
+                      : i === firstChildIndex
+                      ? "first-child"
+                      : ""
+                  }`}
+                >
+                  <VideoCard key={serie} previewContent={serie}></VideoCard>
+                </div>
+              );
+            })}
         </div>
         <button
           className="handle right-handle"

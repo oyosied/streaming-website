@@ -8,6 +8,7 @@
 .hidden {
   display: none;
 }
+
 .mute-button {
   pointer-events: auto;
   position: absolute;
@@ -15,6 +16,7 @@
   bottom: 0;
   height: 12.5px;
   width: 25px;
+  font-size: 4px;
 }
 .video {
   width: 100%;
