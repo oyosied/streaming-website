@@ -33,24 +33,22 @@ const VideoContainer = (props) => {
   return (
     <div className={`video-container`} onMouseLeave={handleLeave}>
       <div className="circular-progress-wrapper">
-        {/* {loading ? <CircularProgress /> : ""} */}
+        {loading ? <CircularProgress /> : ""}
       </div>
 
-      <iframe
-        title="Youtube Play"
+      <video
         className={`video }`}
         src={props.videoContainerData["preview_video_url"]}
         ref={videoRef}
         preload="metadata"
         controls={false}
-        autoStart
         muted={true}
-        // onLoadedData={() => {
-        //   setTimeout(() => {
-        //     setLoading(false);
-        //     handleEnter();
-        //   }, 500);
-        // }}
+        onLoadedData={() => {
+          setTimeout(() => {
+            setLoading(false);
+            handleEnter();
+          }, 500);
+        }}
       />
       {!loading && isVideoExpanded && videoLoaded && (
         <button className="mute-button" onClick={toggleMute}>
