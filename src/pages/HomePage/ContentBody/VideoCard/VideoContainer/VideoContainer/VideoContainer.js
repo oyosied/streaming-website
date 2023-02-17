@@ -29,7 +29,6 @@ const VideoContainer = (props) => {
     setMuted(!muted);
     videoRef.current.muted = !muted;
   };
-  console.log(props.videoContainerData["preview_video_url"]);
   return (
     <div className={`video-container`} onMouseLeave={handleLeave}>
       <div className="circular-progress-wrapper">

@@ -24,7 +24,10 @@ const PreviewBlock = ({ videoData }) => {
           previewHover={isPreviewHovered}
         />
       </div>
-      <div className="description-box">{videoData.description}</div>
+      <div className="description-box">
+        <h3>{videoData.name}</h3>
+        {videoData.description}
+      </div>
     </div>
   );
 };

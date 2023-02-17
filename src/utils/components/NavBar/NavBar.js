@@ -33,7 +33,7 @@ export function NavBar() {
           anchor="left"
         >
           <Toolbar disableGutters>
-            <ImageContainer imagePath="resting_cat.jpg" />
+            <ImageContainer imagePath="https://static.vecteezy.com/system/resources/thumbnails/002/098/203/small/silver-tabby-cat-sitting-on-green-background-free-photo.jpg" />
           </Toolbar>
           <Divider />
           <List>

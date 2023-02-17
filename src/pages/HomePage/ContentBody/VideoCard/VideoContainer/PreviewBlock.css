@@ -1,23 +1,24 @@
 .preview-container {
-  height: auto;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
   border-radius: 1rem;
+  border: 1px solid black;
   background-color: white;
   overflow: hidden;
 }
 .preview-block {
   position: relative;
   width: 100%;
-  height: 10rem;
+  height: 80%;
   display: flex;
   line-height: 0;
   flex-grow: 1;
+  aspect-ratio: 16 / 9;
 }
 .description-box {
-  height: auto;
+  height: 20%;
   width: 100%;
   overflow: auto;
   word-wrap: break-word;

@@ -5,7 +5,6 @@ import { PreviewBlock } from "./VideoContainer/PreviewBlock.js";
 
 const VideoCard = ({ previewContent }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   const handleHover = () => {
     setIsHovered(true);
   };
@@ -18,7 +17,7 @@ const VideoCard = ({ previewContent }) => {
       {isHovered && <PreviewBlock videoData={previewContent} />}
       <ImageContainer
         className={`picture ${!isHovered ? "" : "hidden"}`}
-        imagePath="resting_cat.jpg"
+        imagePath={previewContent["preview_thumbnail_url"]}
         hoverVisible={!isHovered}
       ></ImageContainer>
     </div>

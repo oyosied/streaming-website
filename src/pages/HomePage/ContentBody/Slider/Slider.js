@@ -1,24 +1,31 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { VideoCard } from "../VideoCard/VideoCard";
-import { UserContext } from "../../../../utils/store/AuthContext";
 import "./Slider.css";
 
-const Slider = (props) => {
+function Slider({ genre }) {
   const [sliderIndex, setSliderIndex] = useState(0);
-  const { token } = useContext(UserContext);
-  const [itemsPerScreen, setItemsPerScreen] = useState(null);
+  const [itemsPerScreen, setItemsPerScreen] = useState(5);
+  const numberOfShownItems = parseInt(
+    Math.ceil(genre.series.length / itemsPerScreen)
+  );
+  const imgGap = "0.25rem";
+
   useEffect(() => {
     const sliderElement = document.querySelector(".slider");
     setItemsPerScreen(
-      window
-        .getComputedStyle(sliderElement)
-        .getPropertyValue("--items-per-screen") - 0
+      parseInt(
+        window
+          .getComputedStyle(sliderElement)
+          .getPropertyValue("--items-per-screen")
+      )
     );
     const handleResize = () => {
       setItemsPerScreen(
-        window
-          .getComputedStyle(sliderElement)
-          .getPropertyValue("--items-per-screen") - 0
+        parseInt(
+          window
+            .getComputedStyle(sliderElement)
+            .getPropertyValue("--items-per-screen")
+        )
       );
     };
     window.addEventListener("resize", handleResize);
@@ -27,29 +34,42 @@ const Slider = (props) => {
     };
   }, []);
 
-  //const handleSize = "3rem";
-  const imgGap = "0.25rem";
-  const handleClick = (direction) => {
-    if (direction === "left") {
-      setSliderIndex(sliderIndex - 1);
-    } else {
-      setSliderIndex(sliderIndex + 1);
-    }
-  };
+  function handleLeftClick() {
+    setSliderIndex(
+      (prevIndex) => (prevIndex - 1 + numberOfShownItems) % numberOfShownItems
+    );
+  }
 
+  function handleRightClick() {
+    setSliderIndex((prevIndex) => (prevIndex + 1) % numberOfShownItems);
+  }
+
+  const progressItems = useMemo(
+    () =>
+      Array.from({ length: numberOfShownItems }, (_, i) => (
+        <div
+          key={i}
+          className={`progress-item ${i === sliderIndex ? "active" : ""}`}
+        />
+      )),
+    [numberOfShownItems, sliderIndex]
+  );
   return (
     <div className="row">
       <div className="header">
-        <h3 className="title">{props.genre["name"]}</h3>
-        <div className="progress-bar"></div>
+        <h3 className="title">{genre["name"]}</h3>
+        {numberOfShownItems !== 1 && (
+          <div className="progress-bar">{progressItems}</div>
+        )}
       </div>
       <div className="container">
-        <button
-          className="handle left-handle"
-          onClick={() => handleClick("left")}
-        >
-          <div className="text">&#8249;</div>
-        </button>
+        {numberOfShownItems !== 1 && itemsPerScreen !== numberOfShownItems ? (
+          <button className="handle left-handle" onClick={handleLeftClick}>
+            <div className="text">&#8249;</div>
+          </button>
+        ) : (
+          <div style={{ width: "2rem" }}></div>
+        )}
         <div
           className="slider"
           style={{
@@ -59,8 +79,7 @@ const Slider = (props) => {
           }}
         >
           {itemsPerScreen &&
-            props.genre.series.map((serie, i) => {
-              console.log(serie);
+            genre.series.map((serie, i) => {
               const firstChildIndex = sliderIndex * itemsPerScreen;
               const lastChildIndex = firstChildIndex + itemsPerScreen - 1;
               return (
@@ -79,15 +98,16 @@ const Slider = (props) => {
               );
             })}
         </div>
-        <button
-          className="handle right-handle"
-          onClick={() => handleClick("right")}
-        >
-          <div className="text">&#8250;</div>
-        </button>
+        {numberOfShownItems !== 1 ? (
+          <button className="handle right-handle" onClick={handleRightClick}>
+            <div className="text">&#8250;</div>
+          </button>
+        ) : (
+          <div style={{ width: "2rem" }}></div>
+        )}
       </div>
     </div>
   );
-};
+}
 
 export { Slider };
