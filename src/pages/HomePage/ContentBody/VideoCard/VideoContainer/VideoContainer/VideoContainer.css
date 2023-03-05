@@ -4,6 +4,7 @@
   height: 100%;
   object-fit: fill;
   border-bottom: 1px solid black;
+  cursor: pointer;
 }
 .hidden {
   display: none;

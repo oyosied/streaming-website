@@ -12,6 +12,7 @@ const PreviewBlock = ({ videoData }) => {
   const handleLeave = () => {
     setIsPreviewHovered(false);
   };
+
   return (
     <div className="preview-container">
       <div

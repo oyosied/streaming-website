@@ -4,10 +4,9 @@
   object-fit: fill;
   border-radius: 1rem;
   border: 1px solid black;
+  overflow: hidden;
 }
-.card:hover {
-  border: 0px;
-}
+
 .picture {
   width: 100%;
   height: 100%;

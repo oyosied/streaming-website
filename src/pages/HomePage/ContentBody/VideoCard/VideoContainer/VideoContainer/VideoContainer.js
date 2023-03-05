@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import "./VideoContainer.css";
-const VideoContainer = (props) => {
+const VideoContainer = ({ videoContainerData, previewHover }) => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [muted, setMuted] = useState(true);
+  const navigate = useNavigate();
   const videoRef = useRef(null);
 
   const handleEnter = () => {
@@ -16,7 +18,7 @@ const VideoContainer = (props) => {
     }
   };
   const handleLeave = () => {
-    if (videoRef.current && !props.previewHover) {
+    if (videoRef.current && !previewHover) {
       setVideoLoaded(false);
       setIsVideoExpanded(false);
       setLoading(true);
@@ -25,10 +27,16 @@ const VideoContainer = (props) => {
     }
   };
 
+  const handleVideoClick = () => {
+    const seriesId = videoContainerData.id;
+    const episodeId = 1;
+    navigate(`/video/${seriesId}/${episodeId}`);
+  };
   const toggleMute = () => {
     setMuted(!muted);
     videoRef.current.muted = !muted;
   };
+
   return (
     <div className={`video-container`} onMouseLeave={handleLeave}>
       <div className="circular-progress-wrapper">
@@ -36,12 +44,13 @@ const VideoContainer = (props) => {
       </div>
 
       <video
-        className={`video }`}
-        src={props.videoContainerData["preview_video_url"]}
+        className={`video`}
+        src={videoContainerData["preview_video_url"]}
         ref={videoRef}
         preload="metadata"
         controls={false}
         muted={true}
+        onClick={handleVideoClick}
         onLoadedData={() => {
           setTimeout(() => {
             setLoading(false);

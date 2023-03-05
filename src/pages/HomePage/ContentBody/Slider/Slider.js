@@ -43,7 +43,6 @@ function Slider({ genre }) {
   function handleRightClick() {
     setSliderIndex((prevIndex) => (prevIndex + 1) % numberOfShownItems);
   }
-
   const progressItems = useMemo(
     () =>
       Array.from({ length: numberOfShownItems }, (_, i) => (
@@ -63,7 +62,7 @@ function Slider({ genre }) {
         )}
       </div>
       <div className="container">
-        {numberOfShownItems !== 1 && itemsPerScreen !== numberOfShownItems ? (
+        {numberOfShownItems !== 1 ? (
           <button className="handle left-handle" onClick={handleLeftClick}>
             <div className="text">&#8249;</div>
           </button>

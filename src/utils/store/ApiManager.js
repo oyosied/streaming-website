@@ -25,7 +25,7 @@ class ApiManager {
         return { error: false, response: response.data };
       },
       (error) => {
-        return { error: true, response: error };
+        return { error: true, response: error.response.data };
       }
     );
   }

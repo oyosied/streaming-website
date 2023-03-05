@@ -1,5 +1,7 @@
 import { Button, Col, Form, Input, Row, Select } from "antd";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ApiManagerContext } from "../../../utils/store/ApiMangerContext";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -33,22 +35,22 @@ const tailFormItemLayout = {
   },
 };
 const RegistrationForm = () => {
+  const [error, setError] = useState();
+  const { post } = useContext(ApiManagerContext);
+  const navigate = useNavigate();
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const onFinish = async (values) => {
+    delete values.confirm;
+    const register_res = await post("/users/register", values);
+    if (!register_res.error) {
+      console.log("Registration sucessfull");
+      navigate("/login");
+    } else {
+      console.log("Registration failed", register_res);
+      setError(register_res.response.message);
+    }
   };
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
+
   return (
     <Form
       {...formItemLayout}
@@ -70,6 +72,7 @@ const RegistrationForm = () => {
             message: "Please input your E-mail!",
           },
         ]}
+        validateStatus={error ? "error" : ""}
       >
         <Input />
       </Form.Item>
@@ -124,7 +127,6 @@ const RegistrationForm = () => {
         ]}
       >
         <Input
-          addonBefore={prefixSelector}
           style={{
             width: "100%",
           }}
@@ -160,6 +162,11 @@ const RegistrationForm = () => {
           </Col>
         </Row>
       </Form.Item>
+      {error && (
+        <Form.Item>
+          <Row style={{ color: "red" }}>{error}</Row>
+        </Form.Item>
+      )}
     </Form>
   );
 };
